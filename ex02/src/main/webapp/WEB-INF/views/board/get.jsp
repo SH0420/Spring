@@ -45,6 +45,12 @@
 	              	     <button data-oper='list' class="btn btn-info"
 	              	     onclick="location.href='/board/list'">List</button>
 	              	  
+				    <form id='operForm' action="/board/modify" method="get">
+						<input type='hidden' id='bno' value='<c:out value="${board.bno}"/>'>
+						<input type='hidden' name='pageNum' value='<c:out value="${cri.pageNum}"/>'>
+						<input type='hidden' id='amount' value='<c:out value="${cri.amount}"/>'>
+				    </form>
+	              	  	
 	              </div>
 	              <!-- end panel-body -->
               </div>
@@ -56,7 +62,7 @@
     <!-- /.row -->
     
 <script type="text/javascript">
-$(document).ready(funcion(){
+$(document).ready(function(){
 	var operForm = $("#operForm");
 	
 	$("button[data-oper='modify']").on("click", function(e){

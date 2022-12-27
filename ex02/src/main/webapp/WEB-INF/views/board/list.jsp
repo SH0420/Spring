@@ -35,8 +35,11 @@
                                <c:forEach items="${list}" var="board">                   <!-- list 속성을 통해 DB정보 출력 -->
                                   <tr>
                                      <td><c:out value="${board.bno}" /></td>
-                                     <td><a href='/board/get?bno=<c:out value="${board.bno }"/>'>
-                                     <c:out value="${board.title}"/></a></td>
+                                    <%--  <td><a href='/board/get?bno=<c:out value="${board.bno }"/>'><c:out value="${board.title}"/></a></td> --%>
+                                  <td>
+                            	  	<a class='move' href='<c:out value="${board.bno}"/>'>
+                            	  	  <c:out value="${board.title}" /></a>
+                            	  </td>
                                      <td><c:out value="${board.writer}" /></td>
                                      <td><fmt:formatDate pattern="yyyy-MM-dd" value="${board.regdate}" /></td>
                                      <td><fmt:formatDate pattern="yyyy-MM-dd" value="${board.updateDate}" /></td>
@@ -62,10 +65,7 @@
                             	<c:if test="${pageMaker.next}">
                             	<li class="painate_button next">
                             	  <a href="$pageMaker.engPage +1}"> Next</a>
-                            	  <form id="actionForm" action="/board/list" method='get'>
-								 <input type='hidden' name='pageNum' value = '${pageMaker.cri.pageNum}'>
-								 <input type='hidden' name='amount' value = '${pageMaker.cri.amount}'>
-								</form>	
+                            	 
                             	</li>
                             	</c:if>
                             	
@@ -73,6 +73,16 @@
                             </div>
                             <!--  end Pagination -->
                            </div>
+                           
+                            <form id="actionForm" action="/board/list" method='get'>
+								 <input type='hidden' name='pageNum' value = '${pageMaker.cri.pageNum}'>
+								 <input type='hidden' name='amount' value = '${pageMaker.cri.amount}'>
+                            	  
+                            	  <a href='/board/get?bno=<c:out value="${board.bno}"/>'>
+                            	  <c:out value="${board.title}" /></a>
+                            	 
+								</form>	
+								
                             <!-- Modal 추가 -->
                             <div class="modal fade" id="myModal" tabindex="-1" role="dialog" 
                              aria-labelledby="myModalLabel" aria-hidden="true">
@@ -137,6 +147,15 @@
 			
 			actionForm.find("input[name='pageNum']").val($(this).attr("href"));
 			actionForm.submit();
+			
+		});
+		
+		$(".move").on("click", function(e){
+			
+			e.preventDefault();
+			actionForm.append("<input type='hidden' name='bno' value='"+ $(this).attr("href")+"'>");
+					actionForm.attr("action","/board/get");
+					actionForm.submit();
 		});
 	});
 	

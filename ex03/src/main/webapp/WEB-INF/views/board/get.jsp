@@ -170,6 +170,9 @@
 			
 		}//end showList
 		
+		$("#addReplyBtn").on("click", function(e){
+			$(".modal").modal("show");
+		});
 	});
 </script>
 
